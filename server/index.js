@@ -27,7 +27,7 @@ app.post('/create-task', async (req, res) => {
 
 app.get('/tasks/:userId', async (req, body) => {
     const { userId } = req.params
-    const tasks = await prisma.tasks.findMany({
+    const tasks = await prisma.task.findMany({
         where: { userId }
     })
     res.json(tasks)
@@ -75,4 +75,3 @@ async function populateDB() {
   const task1 = await populateTask('Tarefa 1', 'Descrição da Tarefa 1', 1);
   const task2 = await populateTask('Tarefa 2', 'Descrição da Tarefa 2', 1);
 }
-
