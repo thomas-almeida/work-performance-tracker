@@ -110,13 +110,20 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name'
 };
 
+exports.Prisma.DailyScalarFieldEnum = {
+  id: 'id',
+  day: 'day',
+  userId: 'userId'
+};
+
 exports.Prisma.TaskScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
   deadline: 'deadline',
   userId: 'userId',
-  xp: 'xp'
+  xp: 'xp',
+  dailyId: 'dailyId'
 };
 
 exports.Prisma.NoteScalarFieldEnum = {
@@ -124,7 +131,8 @@ exports.Prisma.NoteScalarFieldEnum = {
   title: 'title',
   content: 'content',
   userId: 'userId',
-  xp: 'xp'
+  xp: 'xp',
+  dailyId: 'dailyId'
 };
 
 exports.Prisma.SortOrder = {
@@ -140,6 +148,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Daily: 'Daily',
   Task: 'Task',
   Note: 'Note'
 };

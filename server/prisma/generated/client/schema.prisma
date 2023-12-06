@@ -9,28 +9,42 @@ datasource sqlite {
 }
 
 model User {
-    id    Int     @id @default(autoincrement())
-    email String
-    name  String?
+    id      Int     @id @default(autoincrement())
+    email   String
+    name    String?
+    dailyes Daily[]
+    Task    Task[]
+    Note    Note[]
+}
+
+model Daily {
+    id     Int    @id @default(autoincrement())
+    day    String
     tasks  Task[]
     notes  Note[]
+    User   User?  @relation(fields: [userId], references: [id])
+    userId Int?
 }
 
 model Task {
-    id        Int      @id @default(autoincrement())
-    name      String
+    id          Int      @id @default(autoincrement())
+    name        String
     description String
-    deadline  DateTime
-    userId    Int
-    user      User     @relation(fields: [userId], references: [id])
-    xp        Int      @default(0)
+    deadline    DateTime
+    userId      Int
+    user        User     @relation(fields: [userId], references: [id])
+    xp          Int      @default(0)
+    Daily       Daily?   @relation(fields: [dailyId], references: [id])
+    dailyId     Int?
 }
 
 model Note {
-    id       Int    @id @default(autoincrement())
+    id      Int    @id @default(autoincrement())
     title   String
     content String
-    userId   Int
-    user     User   @relation(fields: [userId], references: [id])
-    xp       Int    @default(0)
+    userId  Int
+    user    User   @relation(fields: [userId], references: [id])
+    xp      Int    @default(0)
+    Daily   Daily? @relation(fields: [dailyId], references: [id])
+    dailyId Int?
 }

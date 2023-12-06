@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Daily
+ * 
+ */
+export type Daily = $Result.DefaultSelection<Prisma.$DailyPayload>
+/**
  * Model Task
  * 
  */
@@ -160,6 +165,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs>;
+
+  /**
+   * `prisma.daily`: Exposes CRUD operations for the **Daily** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dailies
+    * const dailies = await prisma.daily.findMany()
+    * ```
+    */
+  get daily(): Prisma.DailyDelegate<ExtArgs>;
 
   /**
    * `prisma.task`: Exposes CRUD operations for the **Task** model.
@@ -651,6 +666,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Daily: 'Daily',
     Task: 'Task',
     Note: 'Note'
   };
@@ -669,7 +685,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'user' | 'task' | 'note'
+      modelProps: 'user' | 'daily' | 'task' | 'note'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -732,6 +748,68 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>,
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Daily: {
+        payload: Prisma.$DailyPayload<ExtArgs>
+        fields: Prisma.DailyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DailyFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DailyFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload>
+          }
+          findFirst: {
+            args: Prisma.DailyFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DailyFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload>
+          }
+          findMany: {
+            args: Prisma.DailyFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload>[]
+          }
+          create: {
+            args: Prisma.DailyCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload>
+          }
+          delete: {
+            args: Prisma.DailyDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload>
+          }
+          update: {
+            args: Prisma.DailyUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload>
+          }
+          deleteMany: {
+            args: Prisma.DailyDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DailyUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.DailyUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DailyPayload>
+          }
+          aggregate: {
+            args: Prisma.DailyAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateDaily>
+          }
+          groupBy: {
+            args: Prisma.DailyGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<DailyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DailyCountArgs<ExtArgs>,
+            result: $Utils.Optional<DailyCountAggregateOutputType> | number
           }
         }
       }
@@ -1008,13 +1086,15 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    tasks: number
-    notes: number
+    dailyes: number
+    Task: number
+    Note: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tasks?: boolean | UserCountOutputTypeCountTasksArgs
-    notes?: boolean | UserCountOutputTypeCountNotesArgs
+    dailyes?: boolean | UserCountOutputTypeCountDailyesArgs
+    Task?: boolean | UserCountOutputTypeCountTaskArgs
+    Note?: boolean | UserCountOutputTypeCountNoteArgs
   }
 
   // Custom InputTypes
@@ -1033,7 +1113,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountDailyesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyWhereInput
+  }
+
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
   }
 
@@ -1041,7 +1129,51 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountNoteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NoteWhereInput
+  }
+
+
+
+  /**
+   * Count Type DailyCountOutputType
+   */
+
+  export type DailyCountOutputType = {
+    tasks: number
+    notes: number
+  }
+
+  export type DailyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tasks?: boolean | DailyCountOutputTypeCountTasksArgs
+    notes?: boolean | DailyCountOutputTypeCountNotesArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * DailyCountOutputType without action
+   */
+  export type DailyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyCountOutputType
+     */
+    select?: DailyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * DailyCountOutputType without action
+   */
+  export type DailyCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+  }
+
+
+  /**
+   * DailyCountOutputType without action
+   */
+  export type DailyCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NoteWhereInput
   }
 
@@ -1233,8 +1365,9 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     name?: boolean
-    tasks?: boolean | User$tasksArgs<ExtArgs>
-    notes?: boolean | User$notesArgs<ExtArgs>
+    dailyes?: boolean | User$dailyesArgs<ExtArgs>
+    Task?: boolean | User$TaskArgs<ExtArgs>
+    Note?: boolean | User$NoteArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1245,8 +1378,9 @@ export namespace Prisma {
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tasks?: boolean | User$tasksArgs<ExtArgs>
-    notes?: boolean | User$notesArgs<ExtArgs>
+    dailyes?: boolean | User$dailyesArgs<ExtArgs>
+    Task?: boolean | User$TaskArgs<ExtArgs>
+    Note?: boolean | User$NoteArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1254,8 +1388,9 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
-      notes: Prisma.$NotePayload<ExtArgs>[]
+      dailyes: Prisma.$DailyPayload<ExtArgs>[]
+      Task: Prisma.$TaskPayload<ExtArgs>[]
+      Note: Prisma.$NotePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1610,9 +1745,11 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findMany'> | Null>;
+    dailyes<T extends User$dailyesArgs<ExtArgs> = {}>(args?: Subset<T, User$dailyesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    notes<T extends User$notesArgs<ExtArgs> = {}>(args?: Subset<T, User$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, 'findMany'> | Null>;
+    Task<T extends User$TaskArgs<ExtArgs> = {}>(args?: Subset<T, User$TaskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    Note<T extends User$NoteArgs<ExtArgs> = {}>(args?: Subset<T, User$NoteArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1945,9 +2082,30 @@ export namespace Prisma {
 
 
   /**
-   * User.tasks
+   * User.dailyes
    */
-  export type User$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$dailyesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    where?: DailyWhereInput
+    orderBy?: DailyOrderByWithRelationInput | DailyOrderByWithRelationInput[]
+    cursor?: DailyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DailyScalarFieldEnum | DailyScalarFieldEnum[]
+  }
+
+
+  /**
+   * User.Task
+   */
+  export type User$TaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Task
      */
@@ -1966,9 +2124,9 @@ export namespace Prisma {
 
 
   /**
-   * User.notes
+   * User.Note
    */
-  export type User$notesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$NoteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Note
      */
@@ -2003,6 +2161,982 @@ export namespace Prisma {
 
 
   /**
+   * Model Daily
+   */
+
+  export type AggregateDaily = {
+    _count: DailyCountAggregateOutputType | null
+    _avg: DailyAvgAggregateOutputType | null
+    _sum: DailySumAggregateOutputType | null
+    _min: DailyMinAggregateOutputType | null
+    _max: DailyMaxAggregateOutputType | null
+  }
+
+  export type DailyAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type DailySumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type DailyMinAggregateOutputType = {
+    id: number | null
+    day: string | null
+    userId: number | null
+  }
+
+  export type DailyMaxAggregateOutputType = {
+    id: number | null
+    day: string | null
+    userId: number | null
+  }
+
+  export type DailyCountAggregateOutputType = {
+    id: number
+    day: number
+    userId: number
+    _all: number
+  }
+
+
+  export type DailyAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type DailySumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type DailyMinAggregateInputType = {
+    id?: true
+    day?: true
+    userId?: true
+  }
+
+  export type DailyMaxAggregateInputType = {
+    id?: true
+    day?: true
+    userId?: true
+  }
+
+  export type DailyCountAggregateInputType = {
+    id?: true
+    day?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type DailyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Daily to aggregate.
+     */
+    where?: DailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dailies to fetch.
+     */
+    orderBy?: DailyOrderByWithRelationInput | DailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dailies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dailies
+    **/
+    _count?: true | DailyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DailyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DailySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DailyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DailyMaxAggregateInputType
+  }
+
+  export type GetDailyAggregateType<T extends DailyAggregateArgs> = {
+        [P in keyof T & keyof AggregateDaily]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDaily[P]>
+      : GetScalarType<T[P], AggregateDaily[P]>
+  }
+
+
+
+
+  export type DailyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyWhereInput
+    orderBy?: DailyOrderByWithAggregationInput | DailyOrderByWithAggregationInput[]
+    by: DailyScalarFieldEnum[] | DailyScalarFieldEnum
+    having?: DailyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DailyCountAggregateInputType | true
+    _avg?: DailyAvgAggregateInputType
+    _sum?: DailySumAggregateInputType
+    _min?: DailyMinAggregateInputType
+    _max?: DailyMaxAggregateInputType
+  }
+
+  export type DailyGroupByOutputType = {
+    id: number
+    day: string
+    userId: number | null
+    _count: DailyCountAggregateOutputType | null
+    _avg: DailyAvgAggregateOutputType | null
+    _sum: DailySumAggregateOutputType | null
+    _min: DailyMinAggregateOutputType | null
+    _max: DailyMaxAggregateOutputType | null
+  }
+
+  type GetDailyGroupByPayload<T extends DailyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DailyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DailyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DailyGroupByOutputType[P]>
+            : GetScalarType<T[P], DailyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DailySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    day?: boolean
+    userId?: boolean
+    tasks?: boolean | Daily$tasksArgs<ExtArgs>
+    notes?: boolean | Daily$notesArgs<ExtArgs>
+    User?: boolean | Daily$UserArgs<ExtArgs>
+    _count?: boolean | DailyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["daily"]>
+
+  export type DailySelectScalar = {
+    id?: boolean
+    day?: boolean
+    userId?: boolean
+  }
+
+  export type DailyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tasks?: boolean | Daily$tasksArgs<ExtArgs>
+    notes?: boolean | Daily$notesArgs<ExtArgs>
+    User?: boolean | Daily$UserArgs<ExtArgs>
+    _count?: boolean | DailyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+
+  export type $DailyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Daily"
+    objects: {
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
+      notes: Prisma.$NotePayload<ExtArgs>[]
+      User: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      day: string
+      userId: number | null
+    }, ExtArgs["result"]["daily"]>
+    composites: {}
+  }
+
+
+  type DailyGetPayload<S extends boolean | null | undefined | DailyDefaultArgs> = $Result.GetResult<Prisma.$DailyPayload, S>
+
+  type DailyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DailyFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: DailyCountAggregateInputType | true
+    }
+
+  export interface DailyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Daily'], meta: { name: 'Daily' } }
+    /**
+     * Find zero or one Daily that matches the filter.
+     * @param {DailyFindUniqueArgs} args - Arguments to find a Daily
+     * @example
+     * // Get one Daily
+     * const daily = await prisma.daily.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends DailyFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, DailyFindUniqueArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Daily that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {DailyFindUniqueOrThrowArgs} args - Arguments to find a Daily
+     * @example
+     * // Get one Daily
+     * const daily = await prisma.daily.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends DailyFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, DailyFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Daily that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyFindFirstArgs} args - Arguments to find a Daily
+     * @example
+     * // Get one Daily
+     * const daily = await prisma.daily.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends DailyFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, DailyFindFirstArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Daily that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyFindFirstOrThrowArgs} args - Arguments to find a Daily
+     * @example
+     * // Get one Daily
+     * const daily = await prisma.daily.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends DailyFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, DailyFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Dailies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dailies
+     * const dailies = await prisma.daily.findMany()
+     * 
+     * // Get first 10 Dailies
+     * const dailies = await prisma.daily.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dailyWithIdOnly = await prisma.daily.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends DailyFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DailyFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Daily.
+     * @param {DailyCreateArgs} args - Arguments to create a Daily.
+     * @example
+     * // Create one Daily
+     * const Daily = await prisma.daily.create({
+     *   data: {
+     *     // ... data to create a Daily
+     *   }
+     * })
+     * 
+    **/
+    create<T extends DailyCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, DailyCreateArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Delete a Daily.
+     * @param {DailyDeleteArgs} args - Arguments to delete one Daily.
+     * @example
+     * // Delete one Daily
+     * const Daily = await prisma.daily.delete({
+     *   where: {
+     *     // ... filter to delete one Daily
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends DailyDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, DailyDeleteArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Daily.
+     * @param {DailyUpdateArgs} args - Arguments to update one Daily.
+     * @example
+     * // Update one Daily
+     * const daily = await prisma.daily.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends DailyUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, DailyUpdateArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Dailies.
+     * @param {DailyDeleteManyArgs} args - Arguments to filter Dailies to delete.
+     * @example
+     * // Delete a few Dailies
+     * const { count } = await prisma.daily.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends DailyDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DailyDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dailies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dailies
+     * const daily = await prisma.daily.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends DailyUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, DailyUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Daily.
+     * @param {DailyUpsertArgs} args - Arguments to update or create a Daily.
+     * @example
+     * // Update or create a Daily
+     * const daily = await prisma.daily.upsert({
+     *   create: {
+     *     // ... data to create a Daily
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Daily we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends DailyUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, DailyUpsertArgs<ExtArgs>>
+    ): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Dailies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyCountArgs} args - Arguments to filter Dailies to count.
+     * @example
+     * // Count the number of Dailies
+     * const count = await prisma.daily.count({
+     *   where: {
+     *     // ... the filter for the Dailies we want to count
+     *   }
+     * })
+    **/
+    count<T extends DailyCountArgs>(
+      args?: Subset<T, DailyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DailyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Daily.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DailyAggregateArgs>(args: Subset<T, DailyAggregateArgs>): Prisma.PrismaPromise<GetDailyAggregateType<T>>
+
+    /**
+     * Group by Daily.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DailyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DailyGroupByArgs['orderBy'] }
+        : { orderBy?: DailyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DailyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDailyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Daily model
+   */
+  readonly fields: DailyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Daily.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DailyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    tasks<T extends Daily$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Daily$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    notes<T extends Daily$notesArgs<ExtArgs> = {}>(args?: Subset<T, Daily$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    User<T extends Daily$UserArgs<ExtArgs> = {}>(args?: Subset<T, Daily$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Daily model
+   */ 
+  interface DailyFieldRefs {
+    readonly id: FieldRef<"Daily", 'Int'>
+    readonly day: FieldRef<"Daily", 'String'>
+    readonly userId: FieldRef<"Daily", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Daily findUnique
+   */
+  export type DailyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * Filter, which Daily to fetch.
+     */
+    where: DailyWhereUniqueInput
+  }
+
+
+  /**
+   * Daily findUniqueOrThrow
+   */
+  export type DailyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * Filter, which Daily to fetch.
+     */
+    where: DailyWhereUniqueInput
+  }
+
+
+  /**
+   * Daily findFirst
+   */
+  export type DailyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * Filter, which Daily to fetch.
+     */
+    where?: DailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dailies to fetch.
+     */
+    orderBy?: DailyOrderByWithRelationInput | DailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dailies.
+     */
+    cursor?: DailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dailies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dailies.
+     */
+    distinct?: DailyScalarFieldEnum | DailyScalarFieldEnum[]
+  }
+
+
+  /**
+   * Daily findFirstOrThrow
+   */
+  export type DailyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * Filter, which Daily to fetch.
+     */
+    where?: DailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dailies to fetch.
+     */
+    orderBy?: DailyOrderByWithRelationInput | DailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dailies.
+     */
+    cursor?: DailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dailies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dailies.
+     */
+    distinct?: DailyScalarFieldEnum | DailyScalarFieldEnum[]
+  }
+
+
+  /**
+   * Daily findMany
+   */
+  export type DailyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * Filter, which Dailies to fetch.
+     */
+    where?: DailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dailies to fetch.
+     */
+    orderBy?: DailyOrderByWithRelationInput | DailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dailies.
+     */
+    cursor?: DailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dailies.
+     */
+    skip?: number
+    distinct?: DailyScalarFieldEnum | DailyScalarFieldEnum[]
+  }
+
+
+  /**
+   * Daily create
+   */
+  export type DailyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Daily.
+     */
+    data: XOR<DailyCreateInput, DailyUncheckedCreateInput>
+  }
+
+
+  /**
+   * Daily update
+   */
+  export type DailyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Daily.
+     */
+    data: XOR<DailyUpdateInput, DailyUncheckedUpdateInput>
+    /**
+     * Choose, which Daily to update.
+     */
+    where: DailyWhereUniqueInput
+  }
+
+
+  /**
+   * Daily updateMany
+   */
+  export type DailyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dailies.
+     */
+    data: XOR<DailyUpdateManyMutationInput, DailyUncheckedUpdateManyInput>
+    /**
+     * Filter which Dailies to update
+     */
+    where?: DailyWhereInput
+  }
+
+
+  /**
+   * Daily upsert
+   */
+  export type DailyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Daily to update in case it exists.
+     */
+    where: DailyWhereUniqueInput
+    /**
+     * In case the Daily found by the `where` argument doesn't exist, create a new Daily with this data.
+     */
+    create: XOR<DailyCreateInput, DailyUncheckedCreateInput>
+    /**
+     * In case the Daily was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DailyUpdateInput, DailyUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Daily delete
+   */
+  export type DailyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    /**
+     * Filter which Daily to delete.
+     */
+    where: DailyWhereUniqueInput
+  }
+
+
+  /**
+   * Daily deleteMany
+   */
+  export type DailyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dailies to delete
+     */
+    where?: DailyWhereInput
+  }
+
+
+  /**
+   * Daily.tasks
+   */
+  export type Daily$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+
+  /**
+   * Daily.notes
+   */
+  export type Daily$notesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Note
+     */
+    select?: NoteSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: NoteInclude<ExtArgs> | null
+    where?: NoteWhereInput
+    orderBy?: NoteOrderByWithRelationInput | NoteOrderByWithRelationInput[]
+    cursor?: NoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NoteScalarFieldEnum | NoteScalarFieldEnum[]
+  }
+
+
+  /**
+   * Daily.User
+   */
+  export type Daily$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+
+  /**
+   * Daily without action
+   */
+  export type DailyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+  }
+
+
+
+  /**
    * Model Task
    */
 
@@ -2018,12 +3152,14 @@ export namespace Prisma {
     id: number | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type TaskSumAggregateOutputType = {
     id: number | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type TaskMinAggregateOutputType = {
@@ -2033,6 +3169,7 @@ export namespace Prisma {
     deadline: Date | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type TaskMaxAggregateOutputType = {
@@ -2042,6 +3179,7 @@ export namespace Prisma {
     deadline: Date | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type TaskCountAggregateOutputType = {
@@ -2051,6 +3189,7 @@ export namespace Prisma {
     deadline: number
     userId: number
     xp: number
+    dailyId: number
     _all: number
   }
 
@@ -2059,12 +3198,14 @@ export namespace Prisma {
     id?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type TaskSumAggregateInputType = {
     id?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type TaskMinAggregateInputType = {
@@ -2074,6 +3215,7 @@ export namespace Prisma {
     deadline?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type TaskMaxAggregateInputType = {
@@ -2083,6 +3225,7 @@ export namespace Prisma {
     deadline?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type TaskCountAggregateInputType = {
@@ -2092,6 +3235,7 @@ export namespace Prisma {
     deadline?: true
     userId?: true
     xp?: true
+    dailyId?: true
     _all?: true
   }
 
@@ -2188,6 +3332,7 @@ export namespace Prisma {
     deadline: Date
     userId: number
     xp: number
+    dailyId: number | null
     _count: TaskCountAggregateOutputType | null
     _avg: TaskAvgAggregateOutputType | null
     _sum: TaskSumAggregateOutputType | null
@@ -2216,7 +3361,9 @@ export namespace Prisma {
     deadline?: boolean
     userId?: boolean
     xp?: boolean
+    dailyId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    Daily?: boolean | Task$DailyArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectScalar = {
@@ -2226,10 +3373,12 @@ export namespace Prisma {
     deadline?: boolean
     userId?: boolean
     xp?: boolean
+    dailyId?: boolean
   }
 
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    Daily?: boolean | Task$DailyArgs<ExtArgs>
   }
 
 
@@ -2237,6 +3386,7 @@ export namespace Prisma {
     name: "Task"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      Daily: Prisma.$DailyPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2245,6 +3395,7 @@ export namespace Prisma {
       deadline: Date
       userId: number
       xp: number
+      dailyId: number | null
     }, ExtArgs["result"]["task"]>
     composites: {}
   }
@@ -2596,6 +3747,8 @@ export namespace Prisma {
 
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
+    Daily<T extends Task$DailyArgs<ExtArgs> = {}>(args?: Subset<T, Task$DailyArgs<ExtArgs>>): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2630,6 +3783,7 @@ export namespace Prisma {
     readonly deadline: FieldRef<"Task", 'DateTime'>
     readonly userId: FieldRef<"Task", 'Int'>
     readonly xp: FieldRef<"Task", 'Int'>
+    readonly dailyId: FieldRef<"Task", 'Int'>
   }
     
 
@@ -2930,6 +4084,22 @@ export namespace Prisma {
 
 
   /**
+   * Task.Daily
+   */
+  export type Task$DailyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    where?: DailyWhereInput
+  }
+
+
+  /**
    * Task without action
    */
   export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2961,12 +4131,14 @@ export namespace Prisma {
     id: number | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type NoteSumAggregateOutputType = {
     id: number | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type NoteMinAggregateOutputType = {
@@ -2975,6 +4147,7 @@ export namespace Prisma {
     content: string | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type NoteMaxAggregateOutputType = {
@@ -2983,6 +4156,7 @@ export namespace Prisma {
     content: string | null
     userId: number | null
     xp: number | null
+    dailyId: number | null
   }
 
   export type NoteCountAggregateOutputType = {
@@ -2991,6 +4165,7 @@ export namespace Prisma {
     content: number
     userId: number
     xp: number
+    dailyId: number
     _all: number
   }
 
@@ -2999,12 +4174,14 @@ export namespace Prisma {
     id?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type NoteSumAggregateInputType = {
     id?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type NoteMinAggregateInputType = {
@@ -3013,6 +4190,7 @@ export namespace Prisma {
     content?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type NoteMaxAggregateInputType = {
@@ -3021,6 +4199,7 @@ export namespace Prisma {
     content?: true
     userId?: true
     xp?: true
+    dailyId?: true
   }
 
   export type NoteCountAggregateInputType = {
@@ -3029,6 +4208,7 @@ export namespace Prisma {
     content?: true
     userId?: true
     xp?: true
+    dailyId?: true
     _all?: true
   }
 
@@ -3124,6 +4304,7 @@ export namespace Prisma {
     content: string
     userId: number
     xp: number
+    dailyId: number | null
     _count: NoteCountAggregateOutputType | null
     _avg: NoteAvgAggregateOutputType | null
     _sum: NoteSumAggregateOutputType | null
@@ -3151,7 +4332,9 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     xp?: boolean
+    dailyId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    Daily?: boolean | Note$DailyArgs<ExtArgs>
   }, ExtArgs["result"]["note"]>
 
   export type NoteSelectScalar = {
@@ -3160,10 +4343,12 @@ export namespace Prisma {
     content?: boolean
     userId?: boolean
     xp?: boolean
+    dailyId?: boolean
   }
 
   export type NoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    Daily?: boolean | Note$DailyArgs<ExtArgs>
   }
 
 
@@ -3171,6 +4356,7 @@ export namespace Prisma {
     name: "Note"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      Daily: Prisma.$DailyPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3178,6 +4364,7 @@ export namespace Prisma {
       content: string
       userId: number
       xp: number
+      dailyId: number | null
     }, ExtArgs["result"]["note"]>
     composites: {}
   }
@@ -3529,6 +4716,8 @@ export namespace Prisma {
 
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
+    Daily<T extends Note$DailyArgs<ExtArgs> = {}>(args?: Subset<T, Note$DailyArgs<ExtArgs>>): Prisma__DailyClient<$Result.GetResult<Prisma.$DailyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3562,6 +4751,7 @@ export namespace Prisma {
     readonly content: FieldRef<"Note", 'String'>
     readonly userId: FieldRef<"Note", 'Int'>
     readonly xp: FieldRef<"Note", 'Int'>
+    readonly dailyId: FieldRef<"Note", 'Int'>
   }
     
 
@@ -3862,6 +5052,22 @@ export namespace Prisma {
 
 
   /**
+   * Note.Daily
+   */
+  export type Note$DailyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Daily
+     */
+    select?: DailySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DailyInclude<ExtArgs> | null
+    where?: DailyWhereInput
+  }
+
+
+  /**
    * Note without action
    */
   export type NoteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3897,13 +5103,23 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const DailyScalarFieldEnum: {
+    id: 'id',
+    day: 'day',
+    userId: 'userId'
+  };
+
+  export type DailyScalarFieldEnum = (typeof DailyScalarFieldEnum)[keyof typeof DailyScalarFieldEnum]
+
+
   export const TaskScalarFieldEnum: {
     id: 'id',
     name: 'name',
     description: 'description',
     deadline: 'deadline',
     userId: 'userId',
-    xp: 'xp'
+    xp: 'xp',
+    dailyId: 'dailyId'
   };
 
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
@@ -3914,7 +5130,8 @@ export namespace Prisma {
     title: 'title',
     content: 'content',
     userId: 'userId',
-    xp: 'xp'
+    xp: 'xp',
+    dailyId: 'dailyId'
   };
 
   export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
@@ -3979,16 +5196,18 @@ export namespace Prisma {
     id?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
-    tasks?: TaskListRelationFilter
-    notes?: NoteListRelationFilter
+    dailyes?: DailyListRelationFilter
+    Task?: TaskListRelationFilter
+    Note?: NoteListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrderInput | SortOrder
-    tasks?: TaskOrderByRelationAggregateInput
-    notes?: NoteOrderByRelationAggregateInput
+    dailyes?: DailyOrderByRelationAggregateInput
+    Task?: TaskOrderByRelationAggregateInput
+    Note?: NoteOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3998,8 +5217,9 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
-    tasks?: TaskListRelationFilter
-    notes?: NoteListRelationFilter
+    dailyes?: DailyListRelationFilter
+    Task?: TaskListRelationFilter
+    Note?: NoteListRelationFilter
   }, "id">
 
   export type UserOrderByWithAggregationInput = {
@@ -4022,6 +5242,59 @@ export namespace Prisma {
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
+  export type DailyWhereInput = {
+    AND?: DailyWhereInput | DailyWhereInput[]
+    OR?: DailyWhereInput[]
+    NOT?: DailyWhereInput | DailyWhereInput[]
+    id?: IntFilter<"Daily"> | number
+    day?: StringFilter<"Daily"> | string
+    userId?: IntNullableFilter<"Daily"> | number | null
+    tasks?: TaskListRelationFilter
+    notes?: NoteListRelationFilter
+    User?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type DailyOrderByWithRelationInput = {
+    id?: SortOrder
+    day?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    tasks?: TaskOrderByRelationAggregateInput
+    notes?: NoteOrderByRelationAggregateInput
+    User?: UserOrderByWithRelationInput
+  }
+
+  export type DailyWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DailyWhereInput | DailyWhereInput[]
+    OR?: DailyWhereInput[]
+    NOT?: DailyWhereInput | DailyWhereInput[]
+    day?: StringFilter<"Daily"> | string
+    userId?: IntNullableFilter<"Daily"> | number | null
+    tasks?: TaskListRelationFilter
+    notes?: NoteListRelationFilter
+    User?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type DailyOrderByWithAggregationInput = {
+    id?: SortOrder
+    day?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    _count?: DailyCountOrderByAggregateInput
+    _avg?: DailyAvgOrderByAggregateInput
+    _max?: DailyMaxOrderByAggregateInput
+    _min?: DailyMinOrderByAggregateInput
+    _sum?: DailySumOrderByAggregateInput
+  }
+
+  export type DailyScalarWhereWithAggregatesInput = {
+    AND?: DailyScalarWhereWithAggregatesInput | DailyScalarWhereWithAggregatesInput[]
+    OR?: DailyScalarWhereWithAggregatesInput[]
+    NOT?: DailyScalarWhereWithAggregatesInput | DailyScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Daily"> | number
+    day?: StringWithAggregatesFilter<"Daily"> | string
+    userId?: IntNullableWithAggregatesFilter<"Daily"> | number | null
+  }
+
   export type TaskWhereInput = {
     AND?: TaskWhereInput | TaskWhereInput[]
     OR?: TaskWhereInput[]
@@ -4032,7 +5305,9 @@ export namespace Prisma {
     deadline?: DateTimeFilter<"Task"> | Date | string
     userId?: IntFilter<"Task"> | number
     xp?: IntFilter<"Task"> | number
+    dailyId?: IntNullableFilter<"Task"> | number | null
     user?: XOR<UserRelationFilter, UserWhereInput>
+    Daily?: XOR<DailyNullableRelationFilter, DailyWhereInput> | null
   }
 
   export type TaskOrderByWithRelationInput = {
@@ -4042,7 +5317,9 @@ export namespace Prisma {
     deadline?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    Daily?: DailyOrderByWithRelationInput
   }
 
   export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -4055,7 +5332,9 @@ export namespace Prisma {
     deadline?: DateTimeFilter<"Task"> | Date | string
     userId?: IntFilter<"Task"> | number
     xp?: IntFilter<"Task"> | number
+    dailyId?: IntNullableFilter<"Task"> | number | null
     user?: XOR<UserRelationFilter, UserWhereInput>
+    Daily?: XOR<DailyNullableRelationFilter, DailyWhereInput> | null
   }, "id">
 
   export type TaskOrderByWithAggregationInput = {
@@ -4065,6 +5344,7 @@ export namespace Prisma {
     deadline?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrderInput | SortOrder
     _count?: TaskCountOrderByAggregateInput
     _avg?: TaskAvgOrderByAggregateInput
     _max?: TaskMaxOrderByAggregateInput
@@ -4082,6 +5362,7 @@ export namespace Prisma {
     deadline?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     userId?: IntWithAggregatesFilter<"Task"> | number
     xp?: IntWithAggregatesFilter<"Task"> | number
+    dailyId?: IntNullableWithAggregatesFilter<"Task"> | number | null
   }
 
   export type NoteWhereInput = {
@@ -4093,7 +5374,9 @@ export namespace Prisma {
     content?: StringFilter<"Note"> | string
     userId?: IntFilter<"Note"> | number
     xp?: IntFilter<"Note"> | number
+    dailyId?: IntNullableFilter<"Note"> | number | null
     user?: XOR<UserRelationFilter, UserWhereInput>
+    Daily?: XOR<DailyNullableRelationFilter, DailyWhereInput> | null
   }
 
   export type NoteOrderByWithRelationInput = {
@@ -4102,7 +5385,9 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    Daily?: DailyOrderByWithRelationInput
   }
 
   export type NoteWhereUniqueInput = Prisma.AtLeast<{
@@ -4114,7 +5399,9 @@ export namespace Prisma {
     content?: StringFilter<"Note"> | string
     userId?: IntFilter<"Note"> | number
     xp?: IntFilter<"Note"> | number
+    dailyId?: IntNullableFilter<"Note"> | number | null
     user?: XOR<UserRelationFilter, UserWhereInput>
+    Daily?: XOR<DailyNullableRelationFilter, DailyWhereInput> | null
   }, "id">
 
   export type NoteOrderByWithAggregationInput = {
@@ -4123,6 +5410,7 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrderInput | SortOrder
     _count?: NoteCountOrderByAggregateInput
     _avg?: NoteAvgOrderByAggregateInput
     _max?: NoteMaxOrderByAggregateInput
@@ -4139,36 +5427,41 @@ export namespace Prisma {
     content?: StringWithAggregatesFilter<"Note"> | string
     userId?: IntWithAggregatesFilter<"Note"> | number
     xp?: IntWithAggregatesFilter<"Note"> | number
+    dailyId?: IntNullableWithAggregatesFilter<"Note"> | number | null
   }
 
   export type UserCreateInput = {
     email: string
     name?: string | null
-    tasks?: TaskCreateNestedManyWithoutUserInput
-    notes?: NoteCreateNestedManyWithoutUserInput
+    dailyes?: DailyCreateNestedManyWithoutUserInput
+    Task?: TaskCreateNestedManyWithoutUserInput
+    Note?: NoteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: number
     email: string
     name?: string | null
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
-    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    dailyes?: DailyUncheckedCreateNestedManyWithoutUserInput
+    Task?: TaskUncheckedCreateNestedManyWithoutUserInput
+    Note?: NoteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    tasks?: TaskUpdateManyWithoutUserNestedInput
-    notes?: NoteUpdateManyWithoutUserNestedInput
+    dailyes?: DailyUpdateManyWithoutUserNestedInput
+    Task?: TaskUpdateManyWithoutUserNestedInput
+    Note?: NoteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
-    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    dailyes?: DailyUncheckedUpdateManyWithoutUserNestedInput
+    Task?: TaskUncheckedUpdateManyWithoutUserNestedInput
+    Note?: NoteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpdateManyMutationInput = {
@@ -4182,12 +5475,53 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type DailyCreateInput = {
+    day: string
+    tasks?: TaskCreateNestedManyWithoutDailyInput
+    notes?: NoteCreateNestedManyWithoutDailyInput
+    User?: UserCreateNestedOneWithoutDailyesInput
+  }
+
+  export type DailyUncheckedCreateInput = {
+    id?: number
+    day: string
+    userId?: number | null
+    tasks?: TaskUncheckedCreateNestedManyWithoutDailyInput
+    notes?: NoteUncheckedCreateNestedManyWithoutDailyInput
+  }
+
+  export type DailyUpdateInput = {
+    day?: StringFieldUpdateOperationsInput | string
+    tasks?: TaskUpdateManyWithoutDailyNestedInput
+    notes?: NoteUpdateManyWithoutDailyNestedInput
+    User?: UserUpdateOneWithoutDailyesNestedInput
+  }
+
+  export type DailyUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    day?: StringFieldUpdateOperationsInput | string
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    tasks?: TaskUncheckedUpdateManyWithoutDailyNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutDailyNestedInput
+  }
+
+  export type DailyUpdateManyMutationInput = {
+    day?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DailyUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    day?: StringFieldUpdateOperationsInput | string
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type TaskCreateInput = {
     name: string
     description: string
     deadline: Date | string
     xp?: number
-    user: UserCreateNestedOneWithoutTasksInput
+    user: UserCreateNestedOneWithoutTaskInput
+    Daily?: DailyCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateInput = {
@@ -4197,6 +5531,7 @@ export namespace Prisma {
     deadline: Date | string
     userId: number
     xp?: number
+    dailyId?: number | null
   }
 
   export type TaskUpdateInput = {
@@ -4204,7 +5539,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     xp?: IntFieldUpdateOperationsInput | number
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
+    user?: UserUpdateOneRequiredWithoutTaskNestedInput
+    Daily?: DailyUpdateOneWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
@@ -4214,6 +5550,7 @@ export namespace Prisma {
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TaskUpdateManyMutationInput = {
@@ -4230,13 +5567,15 @@ export namespace Prisma {
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type NoteCreateInput = {
     title: string
     content: string
     xp?: number
-    user: UserCreateNestedOneWithoutNotesInput
+    user: UserCreateNestedOneWithoutNoteInput
+    Daily?: DailyCreateNestedOneWithoutNotesInput
   }
 
   export type NoteUncheckedCreateInput = {
@@ -4245,13 +5584,15 @@ export namespace Prisma {
     content: string
     userId: number
     xp?: number
+    dailyId?: number | null
   }
 
   export type NoteUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     xp?: IntFieldUpdateOperationsInput | number
-    user?: UserUpdateOneRequiredWithoutNotesNestedInput
+    user?: UserUpdateOneRequiredWithoutNoteNestedInput
+    Daily?: DailyUpdateOneWithoutNotesNestedInput
   }
 
   export type NoteUncheckedUpdateInput = {
@@ -4260,6 +5601,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type NoteUpdateManyMutationInput = {
@@ -4274,6 +5616,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -4315,6 +5658,12 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type DailyListRelationFilter = {
+    every?: DailyWhereInput
+    some?: DailyWhereInput
+    none?: DailyWhereInput
+  }
+
   export type TaskListRelationFilter = {
     every?: TaskWhereInput
     some?: TaskWhereInput
@@ -4330,6 +5679,10 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type DailyOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type TaskOrderByRelationAggregateInput = {
@@ -4416,6 +5769,66 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type UserNullableRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type DailyCountOrderByAggregateInput = {
+    id?: SortOrder
+    day?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DailyAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DailyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    day?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DailyMinOrderByAggregateInput = {
+    id?: SortOrder
+    day?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DailySumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -4432,6 +5845,11 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type DailyNullableRelationFilter = {
+    is?: DailyWhereInput | null
+    isNot?: DailyWhereInput | null
+  }
+
   export type TaskCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -4439,12 +5857,14 @@ export namespace Prisma {
     deadline?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type TaskAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type TaskMaxOrderByAggregateInput = {
@@ -4454,6 +5874,7 @@ export namespace Prisma {
     deadline?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type TaskMinOrderByAggregateInput = {
@@ -4463,12 +5884,14 @@ export namespace Prisma {
     deadline?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type TaskSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -4491,12 +5914,14 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type NoteAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type NoteMaxOrderByAggregateInput = {
@@ -4505,6 +5930,7 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type NoteMinOrderByAggregateInput = {
@@ -4513,12 +5939,20 @@ export namespace Prisma {
     content?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
   }
 
   export type NoteSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     xp?: SortOrder
+    dailyId?: SortOrder
+  }
+
+  export type DailyCreateNestedManyWithoutUserInput = {
+    create?: XOR<DailyCreateWithoutUserInput, DailyUncheckedCreateWithoutUserInput> | DailyCreateWithoutUserInput[] | DailyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyCreateOrConnectWithoutUserInput | DailyCreateOrConnectWithoutUserInput[]
+    connect?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
   }
 
   export type TaskCreateNestedManyWithoutUserInput = {
@@ -4531,6 +5965,12 @@ export namespace Prisma {
     create?: XOR<NoteCreateWithoutUserInput, NoteUncheckedCreateWithoutUserInput> | NoteCreateWithoutUserInput[] | NoteUncheckedCreateWithoutUserInput[]
     connectOrCreate?: NoteCreateOrConnectWithoutUserInput | NoteCreateOrConnectWithoutUserInput[]
     connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+  }
+
+  export type DailyUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DailyCreateWithoutUserInput, DailyUncheckedCreateWithoutUserInput> | DailyCreateWithoutUserInput[] | DailyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyCreateOrConnectWithoutUserInput | DailyCreateOrConnectWithoutUserInput[]
+    connect?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
   }
 
   export type TaskUncheckedCreateNestedManyWithoutUserInput = {
@@ -4551,6 +5991,19 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type DailyUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DailyCreateWithoutUserInput, DailyUncheckedCreateWithoutUserInput> | DailyCreateWithoutUserInput[] | DailyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyCreateOrConnectWithoutUserInput | DailyCreateOrConnectWithoutUserInput[]
+    upsert?: DailyUpsertWithWhereUniqueWithoutUserInput | DailyUpsertWithWhereUniqueWithoutUserInput[]
+    set?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    disconnect?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    delete?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    connect?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    update?: DailyUpdateWithWhereUniqueWithoutUserInput | DailyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DailyUpdateManyWithWhereWithoutUserInput | DailyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DailyScalarWhereInput | DailyScalarWhereInput[]
   }
 
   export type TaskUpdateManyWithoutUserNestedInput = {
@@ -4587,6 +6040,19 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type DailyUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DailyCreateWithoutUserInput, DailyUncheckedCreateWithoutUserInput> | DailyCreateWithoutUserInput[] | DailyUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyCreateOrConnectWithoutUserInput | DailyCreateOrConnectWithoutUserInput[]
+    upsert?: DailyUpsertWithWhereUniqueWithoutUserInput | DailyUpsertWithWhereUniqueWithoutUserInput[]
+    set?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    disconnect?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    delete?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    connect?: DailyWhereUniqueInput | DailyWhereUniqueInput[]
+    update?: DailyUpdateWithWhereUniqueWithoutUserInput | DailyUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DailyUpdateManyWithWhereWithoutUserInput | DailyUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DailyScalarWhereInput | DailyScalarWhereInput[]
+  }
+
   export type TaskUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
@@ -4613,36 +6079,168 @@ export namespace Prisma {
     deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutTasksInput = {
-    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+  export type TaskCreateNestedManyWithoutDailyInput = {
+    create?: XOR<TaskCreateWithoutDailyInput, TaskUncheckedCreateWithoutDailyInput> | TaskCreateWithoutDailyInput[] | TaskUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutDailyInput | TaskCreateOrConnectWithoutDailyInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type NoteCreateNestedManyWithoutDailyInput = {
+    create?: XOR<NoteCreateWithoutDailyInput, NoteUncheckedCreateWithoutDailyInput> | NoteCreateWithoutDailyInput[] | NoteUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: NoteCreateOrConnectWithoutDailyInput | NoteCreateOrConnectWithoutDailyInput[]
+    connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutDailyesInput = {
+    create?: XOR<UserCreateWithoutDailyesInput, UserUncheckedCreateWithoutDailyesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDailyesInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutDailyInput = {
+    create?: XOR<TaskCreateWithoutDailyInput, TaskUncheckedCreateWithoutDailyInput> | TaskCreateWithoutDailyInput[] | TaskUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutDailyInput | TaskCreateOrConnectWithoutDailyInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type NoteUncheckedCreateNestedManyWithoutDailyInput = {
+    create?: XOR<NoteCreateWithoutDailyInput, NoteUncheckedCreateWithoutDailyInput> | NoteCreateWithoutDailyInput[] | NoteUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: NoteCreateOrConnectWithoutDailyInput | NoteCreateOrConnectWithoutDailyInput[]
+    connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+  }
+
+  export type TaskUpdateManyWithoutDailyNestedInput = {
+    create?: XOR<TaskCreateWithoutDailyInput, TaskUncheckedCreateWithoutDailyInput> | TaskCreateWithoutDailyInput[] | TaskUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutDailyInput | TaskCreateOrConnectWithoutDailyInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutDailyInput | TaskUpsertWithWhereUniqueWithoutDailyInput[]
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutDailyInput | TaskUpdateWithWhereUniqueWithoutDailyInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutDailyInput | TaskUpdateManyWithWhereWithoutDailyInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type NoteUpdateManyWithoutDailyNestedInput = {
+    create?: XOR<NoteCreateWithoutDailyInput, NoteUncheckedCreateWithoutDailyInput> | NoteCreateWithoutDailyInput[] | NoteUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: NoteCreateOrConnectWithoutDailyInput | NoteCreateOrConnectWithoutDailyInput[]
+    upsert?: NoteUpsertWithWhereUniqueWithoutDailyInput | NoteUpsertWithWhereUniqueWithoutDailyInput[]
+    set?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    disconnect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    delete?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    update?: NoteUpdateWithWhereUniqueWithoutDailyInput | NoteUpdateWithWhereUniqueWithoutDailyInput[]
+    updateMany?: NoteUpdateManyWithWhereWithoutDailyInput | NoteUpdateManyWithWhereWithoutDailyInput[]
+    deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutDailyesNestedInput = {
+    create?: XOR<UserCreateWithoutDailyesInput, UserUncheckedCreateWithoutDailyesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDailyesInput
+    upsert?: UserUpsertWithoutDailyesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDailyesInput, UserUpdateWithoutDailyesInput>, UserUncheckedUpdateWithoutDailyesInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type TaskUncheckedUpdateManyWithoutDailyNestedInput = {
+    create?: XOR<TaskCreateWithoutDailyInput, TaskUncheckedCreateWithoutDailyInput> | TaskCreateWithoutDailyInput[] | TaskUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutDailyInput | TaskCreateOrConnectWithoutDailyInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutDailyInput | TaskUpsertWithWhereUniqueWithoutDailyInput[]
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutDailyInput | TaskUpdateWithWhereUniqueWithoutDailyInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutDailyInput | TaskUpdateManyWithWhereWithoutDailyInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type NoteUncheckedUpdateManyWithoutDailyNestedInput = {
+    create?: XOR<NoteCreateWithoutDailyInput, NoteUncheckedCreateWithoutDailyInput> | NoteCreateWithoutDailyInput[] | NoteUncheckedCreateWithoutDailyInput[]
+    connectOrCreate?: NoteCreateOrConnectWithoutDailyInput | NoteCreateOrConnectWithoutDailyInput[]
+    upsert?: NoteUpsertWithWhereUniqueWithoutDailyInput | NoteUpsertWithWhereUniqueWithoutDailyInput[]
+    set?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    disconnect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    delete?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+    update?: NoteUpdateWithWhereUniqueWithoutDailyInput | NoteUpdateWithWhereUniqueWithoutDailyInput[]
+    updateMany?: NoteUpdateManyWithWhereWithoutDailyInput | NoteUpdateManyWithWhereWithoutDailyInput[]
+    deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutTaskInput = {
+    create?: XOR<UserCreateWithoutTaskInput, UserUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTaskInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DailyCreateNestedOneWithoutTasksInput = {
+    create?: XOR<DailyCreateWithoutTasksInput, DailyUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: DailyCreateOrConnectWithoutTasksInput
+    connect?: DailyWhereUniqueInput
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
 
-  export type UserUpdateOneRequiredWithoutTasksNestedInput = {
-    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
-    upsert?: UserUpsertWithoutTasksInput
+  export type UserUpdateOneRequiredWithoutTaskNestedInput = {
+    create?: XOR<UserCreateWithoutTaskInput, UserUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTaskInput
+    upsert?: UserUpsertWithoutTaskInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTaskInput, UserUpdateWithoutTaskInput>, UserUncheckedUpdateWithoutTaskInput>
   }
 
-  export type UserCreateNestedOneWithoutNotesInput = {
-    create?: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutNotesInput
+  export type DailyUpdateOneWithoutTasksNestedInput = {
+    create?: XOR<DailyCreateWithoutTasksInput, DailyUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: DailyCreateOrConnectWithoutTasksInput
+    upsert?: DailyUpsertWithoutTasksInput
+    disconnect?: DailyWhereInput | boolean
+    delete?: DailyWhereInput | boolean
+    connect?: DailyWhereUniqueInput
+    update?: XOR<XOR<DailyUpdateToOneWithWhereWithoutTasksInput, DailyUpdateWithoutTasksInput>, DailyUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type UserCreateNestedOneWithoutNoteInput = {
+    create?: XOR<UserCreateWithoutNoteInput, UserUncheckedCreateWithoutNoteInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNoteInput
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutNotesNestedInput = {
-    create?: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutNotesInput
-    upsert?: UserUpsertWithoutNotesInput
+  export type DailyCreateNestedOneWithoutNotesInput = {
+    create?: XOR<DailyCreateWithoutNotesInput, DailyUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: DailyCreateOrConnectWithoutNotesInput
+    connect?: DailyWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutNoteNestedInput = {
+    create?: XOR<UserCreateWithoutNoteInput, UserUncheckedCreateWithoutNoteInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNoteInput
+    upsert?: UserUpsertWithoutNoteInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotesInput, UserUpdateWithoutNotesInput>, UserUncheckedUpdateWithoutNotesInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNoteInput, UserUpdateWithoutNoteInput>, UserUncheckedUpdateWithoutNoteInput>
+  }
+
+  export type DailyUpdateOneWithoutNotesNestedInput = {
+    create?: XOR<DailyCreateWithoutNotesInput, DailyUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: DailyCreateOrConnectWithoutNotesInput
+    upsert?: DailyUpsertWithoutNotesInput
+    disconnect?: DailyWhereInput | boolean
+    delete?: DailyWhereInput | boolean
+    connect?: DailyWhereUniqueInput
+    update?: XOR<XOR<DailyUpdateToOneWithWhereWithoutNotesInput, DailyUpdateWithoutNotesInput>, DailyUncheckedUpdateWithoutNotesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -4756,6 +6354,33 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -4781,11 +6406,30 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type DailyCreateWithoutUserInput = {
+    day: string
+    tasks?: TaskCreateNestedManyWithoutDailyInput
+    notes?: NoteCreateNestedManyWithoutDailyInput
+  }
+
+  export type DailyUncheckedCreateWithoutUserInput = {
+    id?: number
+    day: string
+    tasks?: TaskUncheckedCreateNestedManyWithoutDailyInput
+    notes?: NoteUncheckedCreateNestedManyWithoutDailyInput
+  }
+
+  export type DailyCreateOrConnectWithoutUserInput = {
+    where: DailyWhereUniqueInput
+    create: XOR<DailyCreateWithoutUserInput, DailyUncheckedCreateWithoutUserInput>
+  }
+
   export type TaskCreateWithoutUserInput = {
     name: string
     description: string
     deadline: Date | string
     xp?: number
+    Daily?: DailyCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateWithoutUserInput = {
@@ -4794,6 +6438,7 @@ export namespace Prisma {
     description: string
     deadline: Date | string
     xp?: number
+    dailyId?: number | null
   }
 
   export type TaskCreateOrConnectWithoutUserInput = {
@@ -4805,6 +6450,7 @@ export namespace Prisma {
     title: string
     content: string
     xp?: number
+    Daily?: DailyCreateNestedOneWithoutNotesInput
   }
 
   export type NoteUncheckedCreateWithoutUserInput = {
@@ -4812,11 +6458,37 @@ export namespace Prisma {
     title: string
     content: string
     xp?: number
+    dailyId?: number | null
   }
 
   export type NoteCreateOrConnectWithoutUserInput = {
     where: NoteWhereUniqueInput
     create: XOR<NoteCreateWithoutUserInput, NoteUncheckedCreateWithoutUserInput>
+  }
+
+  export type DailyUpsertWithWhereUniqueWithoutUserInput = {
+    where: DailyWhereUniqueInput
+    update: XOR<DailyUpdateWithoutUserInput, DailyUncheckedUpdateWithoutUserInput>
+    create: XOR<DailyCreateWithoutUserInput, DailyUncheckedCreateWithoutUserInput>
+  }
+
+  export type DailyUpdateWithWhereUniqueWithoutUserInput = {
+    where: DailyWhereUniqueInput
+    data: XOR<DailyUpdateWithoutUserInput, DailyUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DailyUpdateManyWithWhereWithoutUserInput = {
+    where: DailyScalarWhereInput
+    data: XOR<DailyUpdateManyMutationInput, DailyUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DailyScalarWhereInput = {
+    AND?: DailyScalarWhereInput | DailyScalarWhereInput[]
+    OR?: DailyScalarWhereInput[]
+    NOT?: DailyScalarWhereInput | DailyScalarWhereInput[]
+    id?: IntFilter<"Daily"> | number
+    day?: StringFilter<"Daily"> | string
+    userId?: IntNullableFilter<"Daily"> | number | null
   }
 
   export type TaskUpsertWithWhereUniqueWithoutUserInput = {
@@ -4845,6 +6517,7 @@ export namespace Prisma {
     deadline?: DateTimeFilter<"Task"> | Date | string
     userId?: IntFilter<"Task"> | number
     xp?: IntFilter<"Task"> | number
+    dailyId?: IntNullableFilter<"Task"> | number | null
   }
 
   export type NoteUpsertWithWhereUniqueWithoutUserInput = {
@@ -4872,90 +6545,321 @@ export namespace Prisma {
     content?: StringFilter<"Note"> | string
     userId?: IntFilter<"Note"> | number
     xp?: IntFilter<"Note"> | number
+    dailyId?: IntNullableFilter<"Note"> | number | null
   }
 
-  export type UserCreateWithoutTasksInput = {
+  export type TaskCreateWithoutDailyInput = {
+    name: string
+    description: string
+    deadline: Date | string
+    xp?: number
+    user: UserCreateNestedOneWithoutTaskInput
+  }
+
+  export type TaskUncheckedCreateWithoutDailyInput = {
+    id?: number
+    name: string
+    description: string
+    deadline: Date | string
+    userId: number
+    xp?: number
+  }
+
+  export type TaskCreateOrConnectWithoutDailyInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutDailyInput, TaskUncheckedCreateWithoutDailyInput>
+  }
+
+  export type NoteCreateWithoutDailyInput = {
+    title: string
+    content: string
+    xp?: number
+    user: UserCreateNestedOneWithoutNoteInput
+  }
+
+  export type NoteUncheckedCreateWithoutDailyInput = {
+    id?: number
+    title: string
+    content: string
+    userId: number
+    xp?: number
+  }
+
+  export type NoteCreateOrConnectWithoutDailyInput = {
+    where: NoteWhereUniqueInput
+    create: XOR<NoteCreateWithoutDailyInput, NoteUncheckedCreateWithoutDailyInput>
+  }
+
+  export type UserCreateWithoutDailyesInput = {
     email: string
     name?: string | null
-    notes?: NoteCreateNestedManyWithoutUserInput
+    Task?: TaskCreateNestedManyWithoutUserInput
+    Note?: NoteCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutTasksInput = {
+  export type UserUncheckedCreateWithoutDailyesInput = {
     id?: number
     email: string
     name?: string | null
-    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    Task?: TaskUncheckedCreateNestedManyWithoutUserInput
+    Note?: NoteUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutTasksInput = {
+  export type UserCreateOrConnectWithoutDailyesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    create: XOR<UserCreateWithoutDailyesInput, UserUncheckedCreateWithoutDailyesInput>
   }
 
-  export type UserUpsertWithoutTasksInput = {
-    update: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
-    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+  export type TaskUpsertWithWhereUniqueWithoutDailyInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutDailyInput, TaskUncheckedUpdateWithoutDailyInput>
+    create: XOR<TaskCreateWithoutDailyInput, TaskUncheckedCreateWithoutDailyInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutDailyInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutDailyInput, TaskUncheckedUpdateWithoutDailyInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutDailyInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutDailyInput>
+  }
+
+  export type NoteUpsertWithWhereUniqueWithoutDailyInput = {
+    where: NoteWhereUniqueInput
+    update: XOR<NoteUpdateWithoutDailyInput, NoteUncheckedUpdateWithoutDailyInput>
+    create: XOR<NoteCreateWithoutDailyInput, NoteUncheckedCreateWithoutDailyInput>
+  }
+
+  export type NoteUpdateWithWhereUniqueWithoutDailyInput = {
+    where: NoteWhereUniqueInput
+    data: XOR<NoteUpdateWithoutDailyInput, NoteUncheckedUpdateWithoutDailyInput>
+  }
+
+  export type NoteUpdateManyWithWhereWithoutDailyInput = {
+    where: NoteScalarWhereInput
+    data: XOR<NoteUpdateManyMutationInput, NoteUncheckedUpdateManyWithoutDailyInput>
+  }
+
+  export type UserUpsertWithoutDailyesInput = {
+    update: XOR<UserUpdateWithoutDailyesInput, UserUncheckedUpdateWithoutDailyesInput>
+    create: XOR<UserCreateWithoutDailyesInput, UserUncheckedCreateWithoutDailyesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTasksInput = {
+  export type UserUpdateToOneWithWhereWithoutDailyesInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+    data: XOR<UserUpdateWithoutDailyesInput, UserUncheckedUpdateWithoutDailyesInput>
   }
 
-  export type UserUpdateWithoutTasksInput = {
+  export type UserUpdateWithoutDailyesInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    notes?: NoteUpdateManyWithoutUserNestedInput
+    Task?: TaskUpdateManyWithoutUserNestedInput
+    Note?: NoteUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutTasksInput = {
+  export type UserUncheckedUpdateWithoutDailyesInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    Task?: TaskUncheckedUpdateManyWithoutUserNestedInput
+    Note?: NoteUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutNotesInput = {
+  export type UserCreateWithoutTaskInput = {
     email: string
     name?: string | null
-    tasks?: TaskCreateNestedManyWithoutUserInput
+    dailyes?: DailyCreateNestedManyWithoutUserInput
+    Note?: NoteCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutNotesInput = {
+  export type UserUncheckedCreateWithoutTaskInput = {
     id?: number
     email: string
     name?: string | null
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
+    dailyes?: DailyUncheckedCreateNestedManyWithoutUserInput
+    Note?: NoteUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutNotesInput = {
+  export type UserCreateOrConnectWithoutTaskInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
+    create: XOR<UserCreateWithoutTaskInput, UserUncheckedCreateWithoutTaskInput>
   }
 
-  export type UserUpsertWithoutNotesInput = {
-    update: XOR<UserUpdateWithoutNotesInput, UserUncheckedUpdateWithoutNotesInput>
-    create: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
+  export type DailyCreateWithoutTasksInput = {
+    day: string
+    notes?: NoteCreateNestedManyWithoutDailyInput
+    User?: UserCreateNestedOneWithoutDailyesInput
+  }
+
+  export type DailyUncheckedCreateWithoutTasksInput = {
+    id?: number
+    day: string
+    userId?: number | null
+    notes?: NoteUncheckedCreateNestedManyWithoutDailyInput
+  }
+
+  export type DailyCreateOrConnectWithoutTasksInput = {
+    where: DailyWhereUniqueInput
+    create: XOR<DailyCreateWithoutTasksInput, DailyUncheckedCreateWithoutTasksInput>
+  }
+
+  export type UserUpsertWithoutTaskInput = {
+    update: XOR<UserUpdateWithoutTaskInput, UserUncheckedUpdateWithoutTaskInput>
+    create: XOR<UserCreateWithoutTaskInput, UserUncheckedCreateWithoutTaskInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutNotesInput = {
+  export type UserUpdateToOneWithWhereWithoutTaskInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutNotesInput, UserUncheckedUpdateWithoutNotesInput>
+    data: XOR<UserUpdateWithoutTaskInput, UserUncheckedUpdateWithoutTaskInput>
   }
 
-  export type UserUpdateWithoutNotesInput = {
+  export type UserUpdateWithoutTaskInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    tasks?: TaskUpdateManyWithoutUserNestedInput
+    dailyes?: DailyUpdateManyWithoutUserNestedInput
+    Note?: NoteUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutNotesInput = {
+  export type UserUncheckedUpdateWithoutTaskInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
+    dailyes?: DailyUncheckedUpdateManyWithoutUserNestedInput
+    Note?: NoteUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type DailyUpsertWithoutTasksInput = {
+    update: XOR<DailyUpdateWithoutTasksInput, DailyUncheckedUpdateWithoutTasksInput>
+    create: XOR<DailyCreateWithoutTasksInput, DailyUncheckedCreateWithoutTasksInput>
+    where?: DailyWhereInput
+  }
+
+  export type DailyUpdateToOneWithWhereWithoutTasksInput = {
+    where?: DailyWhereInput
+    data: XOR<DailyUpdateWithoutTasksInput, DailyUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type DailyUpdateWithoutTasksInput = {
+    day?: StringFieldUpdateOperationsInput | string
+    notes?: NoteUpdateManyWithoutDailyNestedInput
+    User?: UserUpdateOneWithoutDailyesNestedInput
+  }
+
+  export type DailyUncheckedUpdateWithoutTasksInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    day?: StringFieldUpdateOperationsInput | string
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NoteUncheckedUpdateManyWithoutDailyNestedInput
+  }
+
+  export type UserCreateWithoutNoteInput = {
+    email: string
+    name?: string | null
+    dailyes?: DailyCreateNestedManyWithoutUserInput
+    Task?: TaskCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutNoteInput = {
+    id?: number
+    email: string
+    name?: string | null
+    dailyes?: DailyUncheckedCreateNestedManyWithoutUserInput
+    Task?: TaskUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutNoteInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNoteInput, UserUncheckedCreateWithoutNoteInput>
+  }
+
+  export type DailyCreateWithoutNotesInput = {
+    day: string
+    tasks?: TaskCreateNestedManyWithoutDailyInput
+    User?: UserCreateNestedOneWithoutDailyesInput
+  }
+
+  export type DailyUncheckedCreateWithoutNotesInput = {
+    id?: number
+    day: string
+    userId?: number | null
+    tasks?: TaskUncheckedCreateNestedManyWithoutDailyInput
+  }
+
+  export type DailyCreateOrConnectWithoutNotesInput = {
+    where: DailyWhereUniqueInput
+    create: XOR<DailyCreateWithoutNotesInput, DailyUncheckedCreateWithoutNotesInput>
+  }
+
+  export type UserUpsertWithoutNoteInput = {
+    update: XOR<UserUpdateWithoutNoteInput, UserUncheckedUpdateWithoutNoteInput>
+    create: XOR<UserCreateWithoutNoteInput, UserUncheckedCreateWithoutNoteInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNoteInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNoteInput, UserUncheckedUpdateWithoutNoteInput>
+  }
+
+  export type UserUpdateWithoutNoteInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    dailyes?: DailyUpdateManyWithoutUserNestedInput
+    Task?: TaskUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutNoteInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    dailyes?: DailyUncheckedUpdateManyWithoutUserNestedInput
+    Task?: TaskUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type DailyUpsertWithoutNotesInput = {
+    update: XOR<DailyUpdateWithoutNotesInput, DailyUncheckedUpdateWithoutNotesInput>
+    create: XOR<DailyCreateWithoutNotesInput, DailyUncheckedCreateWithoutNotesInput>
+    where?: DailyWhereInput
+  }
+
+  export type DailyUpdateToOneWithWhereWithoutNotesInput = {
+    where?: DailyWhereInput
+    data: XOR<DailyUpdateWithoutNotesInput, DailyUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type DailyUpdateWithoutNotesInput = {
+    day?: StringFieldUpdateOperationsInput | string
+    tasks?: TaskUpdateManyWithoutDailyNestedInput
+    User?: UserUpdateOneWithoutDailyesNestedInput
+  }
+
+  export type DailyUncheckedUpdateWithoutNotesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    day?: StringFieldUpdateOperationsInput | string
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    tasks?: TaskUncheckedUpdateManyWithoutDailyNestedInput
+  }
+
+  export type DailyUpdateWithoutUserInput = {
+    day?: StringFieldUpdateOperationsInput | string
+    tasks?: TaskUpdateManyWithoutDailyNestedInput
+    notes?: NoteUpdateManyWithoutDailyNestedInput
+  }
+
+  export type DailyUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    day?: StringFieldUpdateOperationsInput | string
+    tasks?: TaskUncheckedUpdateManyWithoutDailyNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutDailyNestedInput
+  }
+
+  export type DailyUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    day?: StringFieldUpdateOperationsInput | string
   }
 
   export type TaskUpdateWithoutUserInput = {
@@ -4963,6 +6867,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     xp?: IntFieldUpdateOperationsInput | number
+    Daily?: DailyUpdateOneWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutUserInput = {
@@ -4971,6 +6876,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TaskUncheckedUpdateManyWithoutUserInput = {
@@ -4979,12 +6885,14 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type NoteUpdateWithoutUserInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     xp?: IntFieldUpdateOperationsInput | number
+    Daily?: DailyUpdateOneWithoutNotesNestedInput
   }
 
   export type NoteUncheckedUpdateWithoutUserInput = {
@@ -4992,12 +6900,63 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type NoteUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    xp?: IntFieldUpdateOperationsInput | number
+    dailyId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TaskUpdateWithoutDailyInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    xp?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutTaskNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutDailyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
+    xp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TaskUncheckedUpdateManyWithoutDailyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
+    xp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type NoteUpdateWithoutDailyInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    xp?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutNoteNestedInput
+  }
+
+  export type NoteUncheckedUpdateWithoutDailyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    xp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type NoteUncheckedUpdateManyWithoutDailyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
   }
 
@@ -5011,9 +6970,17 @@ export namespace Prisma {
      */
     export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use DailyCountOutputTypeDefaultArgs instead
+     */
+    export type DailyCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DailyCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use UserDefaultArgs instead
      */
     export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DailyDefaultArgs instead
+     */
+    export type DailyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DailyDefaultArgs<ExtArgs>
     /**
      * @deprecated Use TaskDefaultArgs instead
      */
